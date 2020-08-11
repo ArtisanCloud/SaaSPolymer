@@ -1,0 +1,17 @@
+## Saas Polymer is a intergred tool to quickly bootstrap your multi-SAAS apps project.
+
+[Quick Guide](https://github.com/ArtisanCloud/SaaSPolymer/wiki/Quick-Guide)
+
+### Polymer will include these features:
+* [OAUTH2 (Passport)](https://github.com/ArtisanCloud/SaaSPolymer/wiki/OAuth2-Passport)
+* Support multi-tenant with multi-database separately
+* Support subdomain with each multi-tenant 
+* Using queue-worker model designed
+
+
+### Please publish SaaS Polymer after installtion.
+~~~
+php artisan vendor:publish --tag=SaaSPolymer
+~~~
+
+It will make servial sub-package installed.

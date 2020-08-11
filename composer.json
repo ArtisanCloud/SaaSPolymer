@@ -1,0 +1,24 @@
+{
+    "name": "artisan-cloud/saas-polymer",
+    "description": "This package is a bootstrap of multi-saas apps for developer via laravel framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "michael hu",
+            "email": "hbj148@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "ArtisanCloud\\SaaSPolymer\\": "src"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2"
+    }
+}
+
