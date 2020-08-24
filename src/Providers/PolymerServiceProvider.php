@@ -35,16 +35,6 @@ class PolymerServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        // make sure passport is installed
-        Passport::routes(function ($router) {
-            // RouteRegistrar->forAccessTokens()
-            $router->forAccessTokens();
-        }, ['middleware' => 'checkHeader']);
-        Passport::tokensExpireIn(now()->addDays(90));
-        Passport::refreshTokensExpireIn(now()->addDays(90));
-
-
-
         if ($this->app->runningInConsole()) {
 
 //            $this->commands([
