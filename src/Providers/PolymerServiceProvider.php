@@ -51,9 +51,9 @@ class PolymerServiceProvider extends ServiceProvider
 //                SaasPolymerInstallCommand::class,
 //            ]);
 
-//                $this->publishes([
-//                    __DIR__ . '/../'.SaaSPolymerCommand::FOLDER_MIGRATION.'/migrations' => "/../" . app_path(),
-//                ], 'saas-monomer-migrations');
+            $this->publishes([
+                __DIR__ . '/../../config/polymer.php' => "/../" . config_path('artisancloud/polymer.php'),
+            ], ['SaaSPolymer', 'Landlord-Config']);
         }
     }
 }
