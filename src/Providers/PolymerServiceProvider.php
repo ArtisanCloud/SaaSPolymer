@@ -38,12 +38,19 @@ class PolymerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
 
 //            $this->commands([
-//                SaasPolymerInstallCommand::class,
+//                SaaSPolymerInstallCommand::class,
 //            ]);
 
             $this->publishes([
                 __DIR__ . '/../../config/polymer.php' => "/../" . config_path('artisancloud/polymer.php'),
             ], ['SaaSPolymer', 'Landlord-Config']);
+
+            if (!class_exists('CreateArtisansTable')) {
+                $this->publishes([
+                    __DIR__ . '/../Services/ArtisanService/database/migrations/create_artisans_table.php' => database_path('migrations/2020_08_01_000050_create_artisans_table.php'),
+                    // you can add any number of migrations here
+                ], ['ArtisanCloud', 'SaaSPolymer', 'Artisan']);
+            }
         }
     }
 }

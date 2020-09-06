@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 
 
 
-class SaasPolymerInstallCommand extends Command
+class SaaSPolymerInstallCommand extends Command
 {
 
     /**
