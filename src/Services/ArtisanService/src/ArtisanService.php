@@ -1,40 +1,54 @@
 <?php
+declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Services\ArtisanService\src;
 
-use ArtisanCloud\SaaSFramework\Services\ArtisanService\src\Contracts\ArtisanServiceContract;
+use ArtisanCloud\SaaSFramework\Services\ArtisanCloudService;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
 
 /**
  * Class ArtisanService
  * @package ArtisanCloud\SaaSFramework\Services\ArtisanService\src
  */
-class ArtisanService implements ArtisanServiceContract
+class ArtisanService extends ArtisanCloudService
 {
-    //
 
-    public function register($mobile)
+    public function __construct()
     {
-        $bResult = $this->isRegisteredByMobile($mobile);
-        if(!$bResult){
-            $bResult = $this->createArtisanByMobile($mobile);
+        parent::__construct();
+        $this->m_model = new Artisan();
+    }
+
+    public function getByMobile($mobile): ?Artisan
+    {
+        $artisan = $this->m_model->whereMobile($mobile)->first();
+        return $artisan;
+    }
+
+
+    public function registerBy(array $arrayDate)
+    {
+        $mobile = $arrayDate['mobile'];
+        $artisan = $this->getByMobile($mobile);
+        if (!$artisan) {
+            $artisan = $this->createByMobile($arrayDate);
         }
-        return $bResult;
+        return $artisan;
     }
 
-    public function isRegisteredByMobile($mobile)
+    public function createByMobile($arrayDate): ?Artisan
     {
-        $bResult = Artisan::where('mobile',$mobile)
-                    ->exists();
-        return $bResult;
+        $this->m_model->mobile = $arrayDate['mobile'];
+        $this->m_model->email = $arrayDate['email'];
+        $this->m_model->nickname = $arrayDate['name'];
+
+        $bResult = $this->m_model->save();
+
+        return $bResult ? $this->m_model : null;
     }
 
-    public function createArtisanByMobile($mobile){
-        $artisan = new Artisan();
-
-        $artisan->mobile = $mobile;
-
-        $bResult = $artisan->save();
-        return $bResult;
+    public function isRegisteredByMobile($mobile): bool
+    {
+        return is_null($this->getArtisanByMobile());
     }
 }

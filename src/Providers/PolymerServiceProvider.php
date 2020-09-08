@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Providers;
 
@@ -34,6 +35,10 @@ class PolymerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'artisan-cloud');
 
         if ($this->app->runningInConsole()) {
 
