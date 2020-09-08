@@ -19,6 +19,13 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ArtisanCloud\\SaaSPolymer\\Providers\\PolymerServiceProvider::class"
+            ]
+        }
     }
 }
 

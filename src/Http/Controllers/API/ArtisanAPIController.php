@@ -59,12 +59,12 @@ class ArtisanAPIController extends APIController
             dd($arrayData);
 
             // check if artisan has registered artisan
-            $artisan = $artisanService->register($arrayData);
+            $artisan = $artisanService->registerBy($arrayData);
             if (is_null($artisan)) {
                 throw new BaseException(API_ERR_CODE_FAIL_TO_CREATE_ARTISAN);
             }
 
-            $artisan = ArtisanService::createArtisan($arrayData);
+            $user = ArtisanService::createUserBy($arrayData);
 
             $artisan->artisan()->save($artisan);
 
