@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ArtisanCloud\SaaSPolymer\Http\Controllers\API;
 
 use ArtisanCloud\SaaSFramework\Http\Controllers\API\APIController;
+use ArtisanCloud\SaaSFramework\Http\Controllers\API\APIResponse;
 use ArtisanCloud\SaaSFramework\Http\Requests\RequestGenerateInvitationCode;
 
 use ArtisanCloud\SaaSFramework\Services\CodeService\CodeGenerators\RandomStringGenerator;

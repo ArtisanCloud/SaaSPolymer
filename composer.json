@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ArtisanCloud\\SaaSPolymer\\": "vendor/artisan-cloud/saas-polymer/src"
+            "ArtisanCloud\\SaaSPolymer\\": "src/"
         }
     },
     "require-dev": {
@@ -23,7 +23,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ArtisanCloud\\SaaSPolymer\\Providers\\PolymerServiceProvider::class"
+                "ArtisanCloud\\SaaSPolymer\\Providers\\PolymerServiceProvider"
             ]
         }
     }

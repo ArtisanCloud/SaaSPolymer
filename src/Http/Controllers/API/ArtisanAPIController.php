@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Http\Controllers\API;
 
+use ArtisanCloud\SaaSFramework\Services\LandlordService\src\LandlordService;
 use ArtisanCloud\SaaSPolymer\Http\Requests\RequestArtisanRegisterInvitation;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\ArtisanService;
 
@@ -56,14 +57,14 @@ class ArtisanAPIController extends APIController
         $artisan = \DB::connection('pgsql')->transaction(function () use ($request, $artisanService) {
 
             $arrayData = $request->all();
-            dd($arrayData);
+//            dd($arrayData);
 
             // check if artisan has registered artisan
             $artisan = $artisanService->registerBy($arrayData);
             if (is_null($artisan)) {
                 throw new BaseException(API_ERR_CODE_FAIL_TO_CREATE_ARTISAN);
             }
-
+            $landlord = LandlordService::getDetailForClientByUUID
             $user = ArtisanService::createUserBy($arrayData);
 
             $artisan->artisan()->save($artisan);
