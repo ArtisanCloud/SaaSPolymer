@@ -23,7 +23,7 @@ class CreateArtisansTable extends Migration
             $table->string('mobile')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->tinyInteger('status')->default(ArtisanCloudModel::STATUS_INIT);
             $table->rememberToken();
             

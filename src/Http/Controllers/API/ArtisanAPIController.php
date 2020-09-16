@@ -12,6 +12,7 @@ use ArtisanCloud\SaaSFramework\Http\Controllers\API\APIController;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Exception;
 
 
 class ArtisanAPIController extends APIController
@@ -52,27 +53,44 @@ class ArtisanAPIController extends APIController
 
     }
 
-    public function apiRegisterInvitation(RequestArtisanRegisterInvitation $request, ArtisanService $artisanService)
+    public function apiRegisterInvitation(RequestArtisanRegisterInvitation $request, ArtisanService $artisanService, LandlordService $landlordService)
     {
-        $artisan = \DB::connection('pgsql')->transaction(function () use ($request, $artisanService) {
+        $user = \DB::connection('pgsql')->transaction(function () use ($request, $artisanService, $landlordService) {
 
-            $arrayData = $request->all();
+            try {
+
+                $arrayData = $request->all();
 //            dd($arrayData);
 
-            // check if artisan has registered artisan
-            $artisan = $artisanService->registerBy($arrayData);
-            if (is_null($artisan)) {
-                throw new BaseException(API_ERR_CODE_FAIL_TO_CREATE_ARTISAN);
+                // check if artisan has registered artisan
+                $artisan = $artisanService->registerBy($arrayData);
+                if (is_null($artisan)) {
+                    throw new \Exception('', API_ERR_CODE_FAIL_TO_CREATE_ARTISAN);
+                }
+//            dd($artisan);
+
+                // get Landlord info
+                $landlord = $landlordService->getDetailForClientByUUID($request->input('landlord_uuid'));
+                if (is_null($landlord)) {
+                    throw new \Exception('', API_ERR_CODE_LANDLORD_NOT_EXIST);
+                }
+//                dd($landlord);
+
+                // create user
+                $user = $artisanService->makeUserBy($arrayData);
+                $user->artisan()->associate($artisan);
+                $user->landlord()->associate($landlord);
+
+            } catch (\Exception $e) {
+//                dd($e);
+                throw new BaseException(intval($e->getCode()));
             }
-            $landlord = LandlordService::getDetailForClientByUUID
-            $user = ArtisanService::createUserBy($arrayData);
-
-            $artisan->artisan()->save($artisan);
-
-            return $artisan;
+            return $user;
 
         });
 
+
+        $this->m_apiResponse->setData(new UserResource($user));
 
         return $this->m_apiResponse->toResponse();
     }

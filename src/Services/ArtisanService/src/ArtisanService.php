@@ -6,6 +6,8 @@ namespace ArtisanCloud\SaaSPolymer\Services\ArtisanService\src;
 use ArtisanCloud\SaaSFramework\Services\ArtisanCloudService;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
 
+use App\Models\User;
+
 /**
  * Class ArtisanService
  * @package ArtisanCloud\SaaSFramework\Services\ArtisanService\src
@@ -26,22 +28,35 @@ class ArtisanService extends ArtisanCloudService
     }
 
 
-    public function registerBy(array $arrayDate)
+    /**
+     * Register a artisan
+     *
+     * @param array $arrayData
+     *
+     * @return Artisan|null
+     */
+    public function registerBy(array $arrayData)
     {
-        $mobile = $arrayDate['mobile'];
+        $mobile = $arrayData['mobile'];
         $artisan = $this->getByMobile($mobile);
         if (!$artisan) {
-            $artisan = $this->createBy($arrayDate);
+            $artisan = $this->createBy($arrayData);
         }
         return $artisan;
     }
 
+    /**
+     * make a artisan cloud model
+     *
+     * @param array $arrayData
+     *
+     * @return mixed
+     */
     public function makeBy($arrayData)
     {
-        $this->m_model->mobile = $arrayDate['mobile'];
-        $this->m_model->email = $arrayDate['email'];
-        $this->m_model->nickname = $arrayDate['name'];
-
+        $this->m_model = $this->m_model->create($arrayData);
+        $this->m_model->password = encodePlainPassword($arrayData['password']);
+//        dd($this->m_model);
         return $this->m_model;
     }
 
@@ -51,15 +66,37 @@ class ArtisanService extends ArtisanCloudService
         return is_null($this->getArtisanByMobile());
     }
 
-    public function createUserBy($arrayDate): ?Artisan
+    /**
+     * make a user model and persist it
+     *
+     * @param array $arrayData
+     *
+     * @return User|null
+     */
+    public function createUserBy(array $arrayData): ?User
     {
-        $this->m_model->mobile = $arrayDate['mobile'];
-        $this->m_model->email = $arrayDate['email'];
-        $this->m_model->nickname = $arrayDate['name'];
+//        dd($arrayData);
+        $user = $this->makeUserBy($arrayData);
+//        dd($user);
+        $bResult = $user->save();
 
-        $bResult = $this->m_model->save();
+        return $bResult ? $user : null;
 
-        return $bResult ? $this->m_model : null;
+        return $user;
+    }
+
+    /**
+     * make a user model
+     *
+     * @param array $arrayData
+     *
+     * @return User|null
+     */
+    public function makeUserBy($arrayData): ?User
+    {
+        $user = User::create($arrayData);
+
+        return $user;
     }
 
 }

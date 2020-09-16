@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Http\Requests;
 
+use App\Models\User;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
 use ArtisanCloud\SaaSFramework\Rules\CodeRule;
 use ArtisanCloud\SaaSFramework\Rules\PhoneRule;
@@ -38,19 +39,19 @@ class RequestArtisanRegisterInvitation extends RequestBasic
             'mobile' => [
                 'required',
                 new PhoneRule(),
-//                Rule::unique(Artisan::TABLE_NAME, 'mobile'),
+                Rule::unique(User::TABLE_NAME, 'mobile'),
             ],
             "name" => "required",
             "password" => "required|min:6",
             'invitationEmail' => 'required',
-            'landlordUUID' => 'required',
+            'landlordUuid' => 'required',
             'code' => [
                 'required',
                 new CodeRule(resolve(InvitationCodeService::class), $this->input('invitationEmail') ?? '', Code::TYPE_INVTATION)
             ],
             'email' => [
                 'email:rfc,dns',
-//                Rule::unique(Artisan::TABLE_NAME, 'email'),
+                Rule::unique(User::TABLE_NAME, 'email'),
             ],
 
         ];
