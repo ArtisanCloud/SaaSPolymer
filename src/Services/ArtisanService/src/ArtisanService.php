@@ -31,12 +31,27 @@ class ArtisanService extends ArtisanCloudService
         $mobile = $arrayDate['mobile'];
         $artisan = $this->getByMobile($mobile);
         if (!$artisan) {
-            $artisan = $this->createByMobile($arrayDate);
+            $artisan = $this->createBy($arrayDate);
         }
         return $artisan;
     }
 
-    public function createByMobile($arrayDate): ?Artisan
+    public function makeBy($arrayData)
+    {
+        $this->m_model->mobile = $arrayDate['mobile'];
+        $this->m_model->email = $arrayDate['email'];
+        $this->m_model->nickname = $arrayDate['name'];
+
+        return $this->m_model;
+    }
+
+
+    public function isRegisteredByMobile($mobile): bool
+    {
+        return is_null($this->getArtisanByMobile());
+    }
+
+    public function createUserBy($arrayDate): ?Artisan
     {
         $this->m_model->mobile = $arrayDate['mobile'];
         $this->m_model->email = $arrayDate['email'];
@@ -47,8 +62,4 @@ class ArtisanService extends ArtisanCloudService
         return $bResult ? $this->m_model : null;
     }
 
-    public function isRegisteredByMobile($mobile): bool
-    {
-        return is_null($this->getArtisanByMobile());
-    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +13,7 @@ use Illuminate\Support\Str;
 
 class Artisan extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
 
     const STATUS_INIT = 0;          // init
     const STATUS_NORMAL = 1;        // normal
