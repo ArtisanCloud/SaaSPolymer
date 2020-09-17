@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Http\Controllers\API;
 
+use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
+use ArtisanCloud\SaaSFramework\Http\Resources\ArtisanResource;
+
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use ArtisanCloud\SaaSFramework\Services\LandlordService\src\LandlordService;
 use ArtisanCloud\SaaSPolymer\Http\Requests\RequestArtisanRegisterInvitation;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\ArtisanService;
@@ -80,15 +85,16 @@ class ArtisanAPIController extends APIController
                 $user = $artisanService->makeUserBy($arrayData);
                 $user->artisan()->associate($artisan);
                 $user->landlord()->associate($landlord);
+                $user->save();
 
             } catch (\Exception $e) {
 //                dd($e);
                 throw new BaseException(intval($e->getCode()));
             }
+            
             return $user;
 
         });
-
 
         $this->m_apiResponse->setData(new UserResource($user));
 
