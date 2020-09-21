@@ -52,7 +52,7 @@ class PolymerServiceProvider extends ServiceProvider
 
             if (!class_exists('CreateArtisansTable')) {
                 $this->publishes([
-                    __DIR__ . '/../Services/ArtisanService/database/migrations/create_artisans_table.php' => database_path('migrations/2020_08_01_000050_create_artisans_table.php'),
+                    __DIR__ . '/../Services/ArtisanService/database/migrations/create_artisans_table.php' => database_path('migrations/0_0_0_0_create_artisans_table.php'),
                     // you can add any number of migrations here
                 ], ['ArtisanCloud', 'SaaSPolymer', 'Artisan']);
             }
