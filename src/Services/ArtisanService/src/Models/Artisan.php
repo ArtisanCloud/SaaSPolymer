@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Laravel\Passport\HasApiTokens;
 use League\OAuth2\Server\Exception\OAuthServerException;
 
 class Artisan extends Authenticatable
 {
-    use Notifiable, HasFactory;
+    use HasApiTokens, Notifiable, HasFactory;
 
     const STATUS_INIT = 0;          // init
     const STATUS_NORMAL = 1;        // normal
@@ -26,7 +27,7 @@ class Artisan extends Authenticatable
     const TABLE_NAME = 'artisans';
 
     protected $connection = 'pgsql';
-    
+
     protected $primaryKey = 'uuid';
     protected $keyType = 'string';
     public $incrementing = false;
@@ -91,10 +92,10 @@ class Artisan extends Authenticatable
     public function findForPassport($username)
     {
 //        $artisan = Artisan::whereMobile($username)->first();
-        $artisan = Artisan::where('mobile',$username)->first();
+        $artisan = Artisan::where('mobile', $username)->first();
 //        dd($artisan);
-        if(!$artisan){
-            throw new BaseException( API_ERR_CODE_USER_UNREGISTER);
+        if (!$artisan) {
+            throw new BaseException(API_ERR_CODE_USER_UNREGISTER);
         }
         return $artisan;
     }
@@ -114,8 +115,8 @@ class Artisan extends Authenticatable
 
         $bResult = \Hash::check($strLoginPassword, $this->password);
 
-        if(!$bResult){
-            throw new BaseException( API_ERR_CODE_ACCOUNT_PASSWORD_INCORRECT);
+        if (!$bResult) {
+            throw new BaseException(API_ERR_CODE_ACCOUNT_PASSWORD_INCORRECT);
         }
 
         return $bResult;
