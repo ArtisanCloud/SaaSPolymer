@@ -46,13 +46,31 @@ class ArtisanService extends ArtisanCloudService
     }
 
     /**
-     * make a artisan cloud model
+     * make a artisan model
      *
      * @param array $arrayData
      *
      * @return mixed
      */
     public function makeBy($arrayData)
+    {
+        $this->m_model = $this->m_model->firstOrNew(
+            ['mobile' => $arrayData['mobile']],
+            $arrayData
+        );
+        $this->m_model->password = encodePlainPassword($arrayData['password']);
+//        dd($this->m_model);
+        return $this->m_model;
+    }
+
+    /**
+     * create a artisan model
+     *
+     * @param array $arrayData
+     *
+     * @return mixed
+     */
+    public function createBy($arrayData)
     {
         $this->m_model = $this->m_model->create($arrayData);
         $this->m_model->password = encodePlainPassword($arrayData['password']);
@@ -97,6 +115,20 @@ class ArtisanService extends ArtisanCloudService
         $user = User::create($arrayData);
 
         return $user;
+    }
+
+
+    public static function setAuthUser($user){
+        session(['authUser' => $user]);
+    }
+
+    /**
+     * return current session auth user
+     *
+     * @return Artisan $artisan
+     */
+    public static function getAuthUser(){
+        return session('authArtisan');
     }
 
 }
