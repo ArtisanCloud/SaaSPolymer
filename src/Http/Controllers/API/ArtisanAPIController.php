@@ -75,7 +75,7 @@ class ArtisanAPIController extends APIController
 //            dd($artisan);
 
                 // get Landlord info
-                $landlord = $landlordService->getDetailForClientByUUID($request->input('landlord_uuid'));
+                $landlord = $landlordService->getModelForClientByUUID($request->input('landlord_uuid'));
                 if (is_null($landlord)) {
                     throw new \Exception('', API_ERR_CODE_LANDLORD_NOT_EXIST);
                 }

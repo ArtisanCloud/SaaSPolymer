@@ -70,8 +70,8 @@ class InvitationCodeAPIController extends APIController
         $uuid = $this->m_requestData['uuid'];
 //        dd($id);
 
-        $account = $this->m_account->getDetailForClientByUUID($uuid);
-//        $account = $this->m_account->getCachedDetailForClientByUUID($uuid);
+        $account = $this->m_account->getModelForClientByUUID($uuid);
+//        $account = $this->m_account->getCachedModelForClientByUUID($uuid);
 //        dd($account);
 
         $apiResource = new AccountResource($account);

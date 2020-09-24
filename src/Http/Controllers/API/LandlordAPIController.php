@@ -48,8 +48,8 @@ class LandlordAPIController extends APIController
         $uuid = $this->m_requestData['uuid'];
 //        dd($id);
 
-        $landlord = $this->m_landlord->getDetailForClientByUUID($uuid);
-//        $landlord = $this->m_landlord->getCachedDetailForClientByUUID($uuid);
+        $landlord = $this->m_landlord->getModelForClientByUUID($uuid);
+//        $landlord = $this->m_landlord->getCachedModelForClientByUUID($uuid);
 //        dd($landlord);
 
         $apiResource = new LandlordResource($landlord);

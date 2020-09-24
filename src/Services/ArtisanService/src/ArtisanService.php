@@ -72,10 +72,12 @@ class ArtisanService extends ArtisanCloudService
      */
     public function createBy($arrayData)
     {
-        $this->m_model = $this->m_model->create($arrayData);
-        $this->m_model->password = encodePlainPassword($arrayData['password']);
+        $this->m_model = $this->m_model->makeBy($arrayData);
 //        dd($this->m_model);
-        return $this->m_model;
+
+        $bResult = $this->m_model->save();
+
+        return $bResult ? $this->m_model : null;
     }
 
 
@@ -118,16 +120,25 @@ class ArtisanService extends ArtisanCloudService
     }
 
 
-    public static function setAuthUser($user){
-        session(['authUser' => $user]);
+    /**
+     * set current session auth artisan
+     *
+     * @param Artisan $artisan
+     *
+     */
+
+    public static function setAuthArtisan($artisan)
+    {
+        session(['authArtisan' => $artisan]);
     }
 
     /**
-     * return current session auth user
+     * return current session auth artisan
      *
      * @return Artisan $artisan
      */
-    public static function getAuthUser(){
+    public static function getAuthArtisan(): ?Artisan
+    {
         return session('authArtisan');
     }
 
