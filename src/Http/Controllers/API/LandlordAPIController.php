@@ -5,8 +5,8 @@ namespace ArtisanCloud\SaaSPolymer\Http\Controllers\API;
 
 
 use ArtisanCloud\SaaSFramework\Http\Controllers\API\APIController;
-use ArtisanCloud\SaaSFramework\Http\Resources\LandlordResource;
-use ArtisanCloud\SaaSFramework\Services\LandlordService\src\LandlordService;
+use ArtisanCloud\SaaSMonomer\Http\Resources\LandlordResource;
+use ArtisanCloud\SaaSMonomer\Services\LandlordService\src\LandlordService;
 use Illuminate\Http\Request;
 
 

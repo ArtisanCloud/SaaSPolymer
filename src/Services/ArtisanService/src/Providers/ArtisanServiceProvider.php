@@ -22,8 +22,6 @@ class ArtisanServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->register(ArtisanServiceProvider::class);
-
         $this->app->bind(
             ArtisanServiceContract::class,
             ArtisanService::class
@@ -39,20 +37,26 @@ class ArtisanServiceProvider extends ServiceProvider
     {
 
         // make sure passport is installed
-        Passport::routes(function ($router) {
-            // RouteRegistrar->forAccessTokens()
-            $router->forAccessTokens();
-        }, ['middleware' => 'checkHeader']);
-        Passport::tokensExpireIn(now()->addDays(90));
-        Passport::refreshTokensExpireIn(now()->addDays(90));
+        $this->configPassport();
 
-        
         if ($this->app->runningInConsole()) {
               // publish config file
               $this->publishes([
                   __DIR__ . '/../../config/artisan.php' => "/../" . config_path('artisancloud/artisan.php'),
               ], ['SaaSFramework', 'Artisan-Config']);
             }
+
+    }
+
+    protected function configPassport()
+    {
+        // make sure passport is installed
+        Passport::routes(function ($router) {
+            // RouteRegistrar->forAccessTokens()
+            $router->forAccessTokens();
+        }, ['middleware' => 'checkHeader']);
+        Passport::tokensExpireIn(now()->addDays(90));
+        Passport::refreshTokensExpireIn(now()->addDays(90));
 
     }
 }

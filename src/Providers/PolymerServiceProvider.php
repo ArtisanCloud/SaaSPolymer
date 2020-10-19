@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Providers;
 
+use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Providers\ArtisanServiceProvider;
+use ArtisanCloud\SaaSPolymer\Services\LandService\src\Providers\LandServiceProvider;
 use Laravel\Passport\Passport;
 
 use Illuminate\Support\Facades\Artisan;
@@ -26,6 +28,9 @@ class PolymerServiceProvider extends ServiceProvider
 //        $this->app->register(
 //            TenantServiceProvider::class
 //        );
+
+        $this->app->register(ArtisanServiceProvider::class);
+        $this->app->register(LandServiceProvider::class);
     }
 
     /**
