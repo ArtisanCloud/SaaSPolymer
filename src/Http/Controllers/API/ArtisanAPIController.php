@@ -8,7 +8,7 @@ use ArtisanCloud\SaaSFramework\Http\Resources\ArtisanResource;
 
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use ArtisanCloud\SaaSFramework\Services\LandlordService\src\LandlordService;
+use ArtisanCloud\SaaSMonomer\Services\LandlordService\src\LandlordService;
 use ArtisanCloud\SaaSPolymer\Http\Requests\RequestArtisanRegisterInvitation;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\ArtisanService;
 
