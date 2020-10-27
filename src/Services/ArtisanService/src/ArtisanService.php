@@ -63,23 +63,6 @@ class ArtisanService extends ArtisanCloudService
         return $this->m_model;
     }
 
-    /**
-     * create a artisan model
-     *
-     * @param array $arrayData
-     *
-     * @return mixed
-     */
-    public function createBy($arrayData)
-    {
-        $this->m_model = $this->m_model->makeBy($arrayData);
-//        dd($this->m_model);
-
-        $bResult = $this->m_model->save();
-
-        return $bResult ? $this->m_model : null;
-    }
-
 
     public function isRegisteredByMobile($mobile): bool
     {

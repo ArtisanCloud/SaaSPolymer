@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ArtisanCloud\SaaSPolymer\Http\Requests;
 
 use App\Models\User;
+use ArtisanCloud\SaaSFramework\Services\ArtisanCloudService;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
 use ArtisanCloud\SaaSFramework\Rules\CodeRule;
 use ArtisanCloud\SaaSFramework\Rules\PhoneRule;
@@ -65,5 +66,23 @@ class RequestArtisanRegisterInvitation extends RequestBasic
             'email.email' => __("{$this->m_module}.email"),
             'invitationEmail.email' => __("{$this->m_module}.email"),
         ];
+    }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param \Illuminate\Validation\Validator $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+
+        $validator->after(function ($validator) {
+
+            $arrayTransformedKeys = transformArrayKeysToSnake($this->all());
+            $this->replace($arrayTransformedKeys);
+//            dd($this);
+        });
+
     }
 }
