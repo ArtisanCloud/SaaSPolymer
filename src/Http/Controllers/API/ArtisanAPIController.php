@@ -88,8 +88,11 @@ class ArtisanAPIController extends APIController
                 $user->save();
 
             } catch (\Exception $e) {
-                dd($e);
-                throw new BaseException(intval($e->getCode()));
+//                dd($e);
+                throw new BaseException(
+                    intval($e->getCode()),
+                    $e->getMessage()
+                );
             }
             
             return $user;

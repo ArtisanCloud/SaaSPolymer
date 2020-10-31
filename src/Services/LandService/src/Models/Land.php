@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSMonomer\Services\LandService\src\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use ArtisanCloud\SaaSFramework\Models\ArtisanCloudModel;
 
-class Land extends Model
+class Land extends ArtisanCloudModel
 {
   // Disable Laravel's mass assignment protection
   protected $guarded = [];
