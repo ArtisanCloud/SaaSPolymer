@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Http\Controllers\API;
 
+use ArtisanCloud\SaaSMonomer\Services\TenantService\src\TenantService;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
 use ArtisanCloud\SaaSFramework\Http\Resources\ArtisanResource;
 
@@ -58,11 +59,26 @@ class ArtisanAPIController extends APIController
 
     }
 
-    public function apiRegisterInvitation(RequestArtisanRegisterInvitation $request, ArtisanService $artisanService, LandlordService $landlordService)
+    public function apiRegisterInvitation(
+//        RequestArtisanRegisterInvitation $request,
+        Request $request,
+        ArtisanService $artisanService,
+        LandlordService $landlordService,
+        TenantService $tenantService
+    )
     {
-        $user = \DB::connection('pgsql')->transaction(function () use ($request, $artisanService, $landlordService) {
+        $user = \DB::connection('pgsql')->transaction(function () use (
+            $request,
+            $artisanService,
+            $landlordService,
+            $tenantService
+        ) {
 
             try {
+
+                $tenantService->createDatabase('12312312');
+                return null;
+
 
                 $arrayData = $request->all();
 //            dd($arrayData);
@@ -94,7 +110,7 @@ class ArtisanAPIController extends APIController
                     $e->getMessage()
                 );
             }
-            
+
             return $user;
 
         });
