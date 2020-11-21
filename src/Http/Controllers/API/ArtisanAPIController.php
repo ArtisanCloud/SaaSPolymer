@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ArtisanCloud\SaaSPolymer\Http\Controllers\API;
 
 use ArtisanCloud\SaaSMonomer\Services\TenantService\src\TenantService;
+use ArtisanCloud\SaaSPolymer\Events\UserRegistered;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
 use ArtisanCloud\SaaSFramework\Http\Resources\ArtisanResource;
 
@@ -60,8 +61,7 @@ class ArtisanAPIController extends APIController
     }
 
     public function apiRegisterInvitation(
-//        RequestArtisanRegisterInvitation $request,
-        Request $request,
+        RequestArtisanRegisterInvitation $request,
         ArtisanService $artisanService,
         LandlordService $landlordService,
         TenantService $tenantService
@@ -75,10 +75,6 @@ class ArtisanAPIController extends APIController
         ) {
 
             try {
-
-                $tenantService->createDatabase('12312312');
-                return null;
-
 
                 $arrayData = $request->all();
 //            dd($arrayData);
@@ -103,6 +99,8 @@ class ArtisanAPIController extends APIController
                 $user->landlord()->associate($landlord);
                 $user->save();
 
+
+
             } catch (\Exception $e) {
 //                dd($e);
                 throw new BaseException(
@@ -115,6 +113,12 @@ class ArtisanAPIController extends APIController
 
         });
 
+        // dispatch user registerd event
+        if($user){
+            event(new UserRegistered($user));
+        }
+
+        
         $this->m_apiResponse->setData(new UserResource($user));
 
         return $this->m_apiResponse->toResponse();

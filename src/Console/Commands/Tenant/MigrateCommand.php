@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace ArtisanCloud\SaaSPolymer\Console\Commands;
+namespace ArtisanCloud\SaaSPolymer\Console\Commands\Tenant;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Console\Command;
 
 
 
-class SaaSPolymerInstallCommand extends Command
+class MigrateCommand extends Command
 {
 
     /**
@@ -16,14 +16,14 @@ class SaaSPolymerInstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'saasmonomer:install';
+    protected $signature = 'tenant:migrate';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'saasmonomer:install';
+    protected $description = 'tenant:migrate';
 
 
     /**
@@ -48,7 +48,7 @@ class SaaSPolymerInstallCommand extends Command
 //        dd($this->options());
 
 //        Artisan::call('passport:install');
-        $this->info('install saas polymer');
+        $this->info('command tenant migrate database');
 
         return 0;
     }

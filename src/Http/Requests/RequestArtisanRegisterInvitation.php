@@ -36,24 +36,24 @@ class RequestArtisanRegisterInvitation extends RequestBasic
     public function rules()
     {
         return [
-            'countryCode' => 'required',
-            'mobile' => [
-                'required',
-                new PhoneRule(),
-                Rule::unique(User::TABLE_NAME, 'mobile'),
-            ],
-            "name" => "required",
-            "password" => "required|min:6",
-            'invitationEmail' => 'required',
-            'landlordUuid' => 'required',
-            'code' => [
-                'required',
-                new CodeRule(resolve(InvitationCodeService::class), $this->input('invitationEmail') ?? '', Code::TYPE_INVTATION)
-            ],
-            'email' => [
-                'email:rfc,dns',
-                Rule::unique(User::TABLE_NAME, 'email'),
-            ],
+//            'countryCode' => 'required',
+//            'mobile' => [
+//                'required',
+//                new PhoneRule(),
+//                Rule::unique(User::TABLE_NAME, 'mobile'),
+//            ],
+//            "name" => "required",
+//            "password" => "required|min:6",
+//            'invitationEmail' => 'required',
+//            'landlordUuid' => 'required',
+//            'code' => [
+//                'required',
+//                new CodeRule(resolve(InvitationCodeService::class), $this->input('invitationEmail') ?? '', Code::TYPE_INVTATION)
+//            ],
+//            'email' => [
+//                'email:rfc,dns',
+//                Rule::unique(User::TABLE_NAME, 'email'),
+//            ],
 
         ];
     }

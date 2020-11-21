@@ -97,7 +97,12 @@ class ArtisanService extends ArtisanCloudService
      */
     public function makeUserBy($arrayData): ?User
     {
-        $user = User::create($arrayData);
+        $user = User::firstOrNew(
+            [
+                'mobile' => $arrayData['mobile'],
+            ],
+            $arrayData
+        );
 
         return $user;
     }

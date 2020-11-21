@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Providers;
 
+use ArtisanCloud\SaaSPolymer\Console\Commands\Tenant\InitCommand;
+use ArtisanCloud\SaaSPolymer\Console\Commands\Tenant\MigrateCommand;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Providers\ArtisanServiceProvider;
 use ArtisanCloud\SaaSPolymer\Services\LandService\src\Providers\LandServiceProvider;
 use Laravel\Passport\Passport;
@@ -31,6 +33,7 @@ class PolymerServiceProvider extends ServiceProvider
 
         $this->app->register(ArtisanServiceProvider::class);
         $this->app->register(LandServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**
@@ -51,16 +54,36 @@ class PolymerServiceProvider extends ServiceProvider
 //                SaaSPolymerInstallCommand::class,
 //            ]);
 
-            $this->publishes([
-                __DIR__ . '/../../config/polymer.php' => "/../" . config_path('artisancloud/polymer.php'),
-            ], ['SaaSPolymer', 'Landlord-Config']);
+            $this->publishConfig();
+            $this->publishMigration();
+            $this->publishCommand();
 
-            if (!class_exists('CreateArtisansTable')) {
-                $this->publishes([
-                    __DIR__ . '/../Services/ArtisanService/database/migrations/create_artisans_table.php' => database_path('migrations/0_0_0_0_create_artisans_table.php'),
-                    // you can add any number of migrations here
-                ], ['ArtisanCloud', 'SaaSPolymer', 'Artisan']);
-            }
+
         }
     }
-}
+
+    protected function publishConfig()
+    {
+        $this->publishes([
+            __DIR__ . '/../../config/polymer.php' => "/../" . config_path('artisancloud/polymer.php'),
+        ], ['SaaSPolymer', 'Landlord-Config']);
+    }
+
+    protected function publishMigration()
+    {
+        if (!class_exists('CreateArtisansTable')) {
+            $this->publishes([
+                __DIR__ . '/../Services/ArtisanService/database/migrations/create_artisans_table.php' => database_path('migrations/0_0_0_0_create_artisans_table.php'),
+                // you can add any number of migrations here
+            ], ['ArtisanCloud', 'SaaSPolymer', 'Artisan']);
+        }
+    }
+
+    protected function publishCommand()
+    {
+        $this->commands([
+            InitCommand::class,
+            MigrateCommand::class,
+        ]);
+    }
+}   
