@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 
-class UserEventSubscriber implements ShouldQueue
+class UserEventSubscriber
 {
     /**
      * Create the event listener.
@@ -27,7 +27,7 @@ class UserEventSubscriber implements ShouldQueue
         Log::info('Subscriber user registered: '. $event->user->mobile);
 
         // dispatch create tenant database job
-//        ProcessTenantDatabase::dispatch($podcast);
+        ProcessTenantDatabase::dispatch($event->user);
 //            ->onConnection('tenant')
 //            ->onQueue('database');
 
