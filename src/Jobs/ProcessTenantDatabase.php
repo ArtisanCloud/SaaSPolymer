@@ -3,6 +3,8 @@
 namespace ArtisanCloud\SaaSPolymer\Jobs;
 
 use App\Models\User;
+use App\Services\UserService\UserService;
+use ArtisanCloud\SaaSMonomer\Services\TenantService\src\TenantService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,6 +18,8 @@ class ProcessTenantDatabase implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public User $user;
+    protected TenantService $tenantService;
+    protected UserService $userService;
 
     /**
      * Create a new job instance.
@@ -26,6 +30,9 @@ class ProcessTenantDatabase implements ShouldQueue
     {
         //
         $this->user = $user->withoutRelations();
+
+        $this->tenantService = new TenantService();
+        $this->userService = new UserService();
     }
 
     /**
@@ -36,11 +43,23 @@ class ProcessTenantDatabase implements ShouldQueue
     public function handle()
     {
         //
-        Log::info('Process Tenant database:'.$this->user->mobile);
+        Log::info('Process Tenant database:' . $this->user->mobile);
 
+        if ($this->userService->isUserInit($this->user)) {
+            // create user database
+            $arrayDBInfo = $this->tenantService->generateDatabaseAccessInfoBy($this->user->uuid);
+            Log::debug('databaseID:', $arrayDBInfo);
 
-        // create user database
-//        $bResult = $tenantService->createDatabase('ef1afcae99fc437b8d86338ddd7a7237');
+            $bResult = $this->tenantService->createDatabase($arrayDBInfo);
+            if (!$bResult) {
+                Log::alert("User: {$this->user->mobile}  failed to create database, please email amdin");
+            } else {
+                Log::info("User: {$this->user->mobile}  succeed to create database, user will received a email to login");
+            }
+
+        } else {
+            Log::warning('User is not init or user has create a tenant database');
+        }
 
     }
 }

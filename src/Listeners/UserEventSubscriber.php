@@ -23,28 +23,30 @@ class UserEventSubscriber
     /**
      * Handle user login events.
      */
-    public function handleUserRegistered($event) {
-        Log::info('Subscriber user registered: '. $event->user->mobile);
+    public function handleUserRegistered($event)
+    {
+        Log::info('Subscriber user registered: ' . $event->user->mobile);
 
         // dispatch create tenant database job
-        ProcessTenantDatabase::dispatch($event->user);
-//            ->onConnection('tenant')
-//            ->onQueue('database');
+        ProcessTenantDatabase::dispatch($event->user)
+            ->onConnection('redis-tenant')
+            ->onQueue('tenant-database');
 
     }
 
     /**
      * Handle user logout events.
      */
-    public function handleUserLogout($event) {}
-
+    public function handleUserLogout($event)
+    {
+    }
 
 
     /**
      * Handle a job failure.
      *
      * @param  $event
-     * @param  \Throwable  $exception
+     * @param \Throwable $exception
      * @return void
      */
     public function failed($event, $exception)
@@ -56,7 +58,7 @@ class UserEventSubscriber
     /**
      * Register the listeners for the subscriber.
      *
-     * @param  \Illuminate\Events\Dispatcher  $events
+     * @param \Illuminate\Events\Dispatcher $events
      * @return void
      */
     public function subscribe($events)
