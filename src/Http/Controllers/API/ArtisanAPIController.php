@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Http\Controllers\API;
 
+use ArtisanCloud\SaaSMonomer\Services\TenantService\src\Models\Tenant;
 use ArtisanCloud\SaaSMonomer\Services\TenantService\src\TenantService;
 use ArtisanCloud\SaaSPolymer\Events\UserRegistered;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
@@ -19,6 +20,7 @@ use ArtisanCloud\SaaSFramework\Http\Controllers\API\APIController;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use mysql_xdevapi\Exception;
 
 
@@ -93,12 +95,18 @@ class ArtisanAPIController extends APIController
                 }
 //                dd($landlord);
 
+
                 // create user
                 $user = $artisanService->makeUserBy($arrayData);
                 $user->artisan()->associate($artisan);
                 $user->landlord()->associate($landlord);
                 $user->save();
 
+                // create a tenant for user
+                $arrayDBInfo = $tenantService->generateDatabaseAccessInfoBy($this->user->uuid);
+                $arrayDBInfo['type']= Tenant::TYPE_USER;
+                $arrayDBInfo['tenantable_uuid']= $user->uuid;
+                $tenant = $tenantService->createBy($arrayDBInfo);
 
 
             } catch (\Exception $e) {

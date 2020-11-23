@@ -28,7 +28,10 @@ class UserEventSubscriber
         Log::info('Subscriber user registered: ' . $event->user->mobile);
 
         // dispatch create tenant database job
-        ProcessTenantDatabase::dispatch($event->user)
+        $user = $event->user;
+        $personTenant = $user->loadMissing('tenant');
+        Log::info('Ready to dispatch user tenant: ' . $personTenant->uuid);
+        ProcessTenantDatabase::dispatch($personTenant)
             ->onConnection('redis-tenant')
             ->onQueue('tenant-database');
 
