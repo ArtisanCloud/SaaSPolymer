@@ -21,6 +21,7 @@ class ProcessTenantDatabase implements ShouldQueue
     public Tenant $tenant;
     protected TenantService $tenantService;
     protected UserService $userService;
+    protected orgService $orgService;
 
     /**
      * Create a new job instance.
@@ -34,7 +35,11 @@ class ProcessTenantDatabase implements ShouldQueue
 
         $this->tenantService = new TenantService();
         $this->userService = new UserService();
-        $this->userService->setModel($this->tenant->user());
+
+        $this->tenant->loadMissing('user');
+        $user = $this->tenant->user;
+        dd($user);
+        $this->userService->setModel($user);
     }
 
     /**

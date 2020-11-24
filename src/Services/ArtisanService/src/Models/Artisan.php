@@ -39,6 +39,7 @@ class Artisan extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'short_name',
         'mobile',
         'email',
     ];

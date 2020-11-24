@@ -79,7 +79,7 @@ class ArtisanAPIController extends APIController
             try {
 
                 $arrayData = $request->all();
-//            dd($arrayData);
+//                dd($arrayData);
 
                 // check if artisan has registered artisan
                 $artisan = $artisanService->registerBy($arrayData);
@@ -103,9 +103,9 @@ class ArtisanAPIController extends APIController
                 $user->save();
 
                 // create a tenant for user
-                $arrayDBInfo = $tenantService->generateDatabaseAccessInfoBy($this->user->uuid);
-                $arrayDBInfo['type']= Tenant::TYPE_USER;
-                $arrayDBInfo['tenantable_uuid']= $user->uuid;
+                $arrayDBInfo = $tenantService->generateDatabaseAccessInfoBy(Tenant::TYPE_USER, $artisan->short_name, $user->uuid);
+                $arrayDBInfo['type'] = Tenant::TYPE_USER;
+                $arrayDBInfo['tenantable_uuid'] = $user->uuid;
                 $tenant = $tenantService->createBy($arrayDBInfo);
 
 
@@ -122,11 +122,13 @@ class ArtisanAPIController extends APIController
         });
 
         // dispatch user registerd event
-        if($user){
+        if ($user) {
+            $user->loadMissing('tenant');
+//            dd($user);
             event(new UserRegistered($user));
         }
 
-        
+
         $this->m_apiResponse->setData(new UserResource($user));
 
         return $this->m_apiResponse->toResponse();

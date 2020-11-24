@@ -55,7 +55,10 @@ class ArtisanService extends ArtisanCloudService
     public function makeBy($arrayData)
     {
         $this->m_model = $this->m_model->firstOrNew(
-            ['mobile' => $arrayData['mobile']],
+            [
+                'mobile' => $arrayData['mobile'],
+                'short_name' => $arrayData['short_name']
+            ],
             $arrayData
         );
         $this->m_model->password = encodePlainPassword($arrayData['password']);
@@ -97,6 +100,7 @@ class ArtisanService extends ArtisanCloudService
      */
     public function makeUserBy($arrayData): ?User
     {
+//        dd($arrayData);
         $user = User::firstOrNew(
             [
                 'mobile' => $arrayData['mobile'],

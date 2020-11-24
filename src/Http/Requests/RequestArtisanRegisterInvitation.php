@@ -43,6 +43,13 @@ class RequestArtisanRegisterInvitation extends RequestBasic
 //                Rule::unique(User::TABLE_NAME, 'mobile'),
 //            ],
 //            "name" => "required",
+//            "shortName" => [
+//                "required",
+//                'alpha_dash',
+//                'min:3',
+//                'max:255',
+//                Rule::unique(Artisan::TABLE_NAME, 'short_name'),
+//            ],
 //            "password" => "required|min:6",
 //            'invitationEmail' => 'required',
 //            'landlordUuid' => 'required',
