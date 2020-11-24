@@ -5,6 +5,7 @@ namespace ArtisanCloud\SaaSPolymer\Http\Requests;
 
 use App\Models\User;
 use ArtisanCloud\SaaSFramework\Services\ArtisanCloudService;
+use ArtisanCloud\SaaSMonomer\Services\OrgService\Models\Org;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
 use ArtisanCloud\SaaSFramework\Rules\CodeRule;
 use ArtisanCloud\SaaSFramework\Rules\PhoneRule;
@@ -50,6 +51,13 @@ class RequestArtisanRegisterInvitation extends RequestBasic
 //                'max:255',
 //                Rule::unique(Artisan::TABLE_NAME, 'short_name'),
 //            ],
+//            "orgName" => [
+//                "required",
+//                'min:3',
+//                'max:255',
+//                Rule::unique(Org::TABLE_NAME, 'name'),
+//            ],
+//            "orgName" => "required",
 //            "password" => "required|min:6",
 //            'invitationEmail' => 'required',
 //            'landlordUuid' => 'required',

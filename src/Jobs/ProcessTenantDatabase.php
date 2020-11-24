@@ -4,6 +4,7 @@ namespace ArtisanCloud\SaaSPolymer\Jobs;
 
 use App\Services\UserService\UserService;
 use ArtisanCloud\SaaSFramework\Exceptions\BaseException;
+use ArtisanCloud\SaaSMonomer\Services\OrgService\OrgService;
 use ArtisanCloud\SaaSMonomer\Services\TenantService\src\Models\Tenant;
 use ArtisanCloud\SaaSMonomer\Services\TenantService\src\TenantService;
 use Illuminate\Bus\Queueable;
@@ -20,8 +21,7 @@ class ProcessTenantDatabase implements ShouldQueue
 
     public Tenant $tenant;
     protected TenantService $tenantService;
-    protected UserService $userService;
-    protected orgService $orgService;
+    protected OrgService $orgService;
 
     /**
      * Create a new job instance.
@@ -34,12 +34,14 @@ class ProcessTenantDatabase implements ShouldQueue
         $this->tenant = $tenant;
 
         $this->tenantService = new TenantService();
-        $this->userService = new UserService();
+        $this->tenantService->setModel($this->tenant);
 
-        $this->tenant->loadMissing('user');
-        $user = $this->tenant->user;
-        dd($user);
-        $this->userService->setModel($user);
+
+        $this->userService = new UserService();
+        $this->tenant->loadMissing('org');
+        $org = $this->tenant->org;
+//        dd($user);
+        $this->$orgService->setModel($org);
     }
 
     /**
@@ -50,7 +52,7 @@ class ProcessTenantDatabase implements ShouldQueue
     public function handle()
     {
         //
-        Log::info('Process Tenant database:' . $this->user->mobile);
+        Log::info("Process User:{$this->userService->getModel()->name} Tenant database:{$this->tenant->uuid}" );
 
         try {
             if ($this->userService->isUserInit($this->user)) {
@@ -77,5 +79,12 @@ class ProcessTenantDatabase implements ShouldQueue
 
         return $user;
 
+    }
+
+    protected function loadService()
+    {
+        if($this->tenant->isTypeOfUser()){
+
+        }
     }
 }

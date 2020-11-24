@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Http\Controllers\API;
 
+use ArtisanCloud\SaaSMonomer\Services\OrgService\OrgService;
 use ArtisanCloud\SaaSMonomer\Services\TenantService\src\Models\Tenant;
 use ArtisanCloud\SaaSMonomer\Services\TenantService\src\TenantService;
 use ArtisanCloud\SaaSPolymer\Events\UserRegistered;
@@ -65,15 +66,13 @@ class ArtisanAPIController extends APIController
     public function apiRegisterInvitation(
         RequestArtisanRegisterInvitation $request,
         ArtisanService $artisanService,
-        LandlordService $landlordService,
-        TenantService $tenantService
+        LandlordService $landlordService
     )
     {
         $user = \DB::connection('pgsql')->transaction(function () use (
             $request,
             $artisanService,
-            $landlordService,
-            $tenantService
+            $landlordService
         ) {
 
             try {
@@ -95,18 +94,11 @@ class ArtisanAPIController extends APIController
                 }
 //                dd($landlord);
 
-
                 // create user
                 $user = $artisanService->makeUserBy($arrayData);
                 $user->artisan()->associate($artisan);
                 $user->landlord()->associate($landlord);
                 $user->save();
-
-                // create a tenant for user
-                $arrayDBInfo = $tenantService->generateDatabaseAccessInfoBy(Tenant::TYPE_USER, $artisan->short_name, $user->uuid);
-                $arrayDBInfo['type'] = Tenant::TYPE_USER;
-                $arrayDBInfo['tenantable_uuid'] = $user->uuid;
-                $tenant = $tenantService->createBy($arrayDBInfo);
 
 
             } catch (\Exception $e) {
