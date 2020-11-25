@@ -18,21 +18,24 @@ class UserRegistered
 
     public User $user;
     public string $orgName;
+    public string $shortName;
 
     /**
      * Create a new event instance.
      *
      * @param User $user
      * @param string $orgName
+     * @param string $shortName
      *
      * @return void
      */
-    public function __construct(User $user, string $orgName)
+    public function __construct(User $user, string $orgName,string $shortName)
     {
         //
         $this->user = $user;
         $this->orgName = $orgName;
-        Log::info('Event user registered: ' . $user->mobile . " org name:" . $orgName);
+        $this->shortName = $shortName;
+        Log::info('Event user registered: ' . $user->mobile . " org name:" . $orgName . " org short name:" . $shortName );
     }
 
     /**

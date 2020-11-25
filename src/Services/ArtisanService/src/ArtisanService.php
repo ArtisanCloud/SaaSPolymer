@@ -57,7 +57,6 @@ class ArtisanService extends ArtisanCloudService
         $this->m_model = $this->m_model->firstOrNew(
             [
                 'mobile' => $arrayData['mobile'],
-                'short_name' => $arrayData['short_name']
             ],
             $arrayData
         );

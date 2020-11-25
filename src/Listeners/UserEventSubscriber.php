@@ -30,7 +30,7 @@ class UserEventSubscriber
         Log::info('Subscriber user registered: ' . $event->user->mobile);
 
         // to create user org
-        OrgService::dispatchCreateOrgBy($event->user, $event->orgName);
+        OrgService::dispatchCreateOrgBy($event->user, $event->orgName,$event->shortName);
 
     }
 
