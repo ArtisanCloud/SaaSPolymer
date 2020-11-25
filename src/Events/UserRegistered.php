@@ -17,17 +17,22 @@ class UserRegistered
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public User $user;
+    public string $orgName;
 
     /**
      * Create a new event instance.
      *
+     * @param User $user
+     * @param string $orgName
+     *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, string $orgName)
     {
         //
         $this->user = $user;
-        Log::info('Event user registered: ' . $user->mobile);
+        $this->orgName = $orgName;
+        Log::info('Event user registered: ' . $user->mobile . " org name:" . $orgName);
     }
 
     /**

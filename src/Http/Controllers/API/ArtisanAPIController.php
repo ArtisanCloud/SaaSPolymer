@@ -76,7 +76,6 @@ class ArtisanAPIController extends APIController
         ) {
 
             try {
-
                 $arrayData = $request->all();
 //                dd($arrayData);
 
@@ -115,9 +114,9 @@ class ArtisanAPIController extends APIController
 
         // dispatch user registerd event
         if ($user) {
-            $user->loadMissing('tenant');
 //            dd($user);
-            event(new UserRegistered($user));
+            $eventUserRegistered = new UserRegistered($user, $request->input('org_name'));
+            event($eventUserRegistered);
         }
 
 
