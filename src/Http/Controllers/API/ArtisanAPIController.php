@@ -5,6 +5,7 @@ namespace ArtisanCloud\SaaSPolymer\Http\Controllers\API;
 
 use ArtisanCloud\SaaSMonomer\Services\OrgService\OrgService;
 use ArtisanCloud\SaaSMonomer\Services\TenantService\src\Models\Tenant;
+use ArtisanCloud\SaaSMonomer\Services\TenantService\src\Models\TenantModel;
 use ArtisanCloud\SaaSMonomer\Services\TenantService\src\TenantService;
 use ArtisanCloud\SaaSPolymer\Events\UserRegistered;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Models\Artisan;
@@ -69,7 +70,7 @@ class ArtisanAPIController extends APIController
         LandlordService $landlordService
     )
     {
-        $user = \DB::connection('pgsql')->transaction(function () use (
+        $user = \DB::connection()->transaction(function () use (
             $request,
             $artisanService,
             $landlordService
