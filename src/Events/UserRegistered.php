@@ -35,7 +35,7 @@ class UserRegistered
         $this->user = $user;
         $this->orgName = $orgName;
         $this->shortName = $shortName;
-        Log::info('Event user registered: ' . $user->mobile . " org name:" . $orgName . " org short name:" . $shortName );
+        Log::info($user->mobile.": Event user registered:  org name:" . $orgName . " org short name:" . $shortName );
     }
 
     /**
