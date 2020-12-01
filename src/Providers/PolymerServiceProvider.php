@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace ArtisanCloud\SaaSPolymer\Providers;
 
-use ArtisanCloud\SaaSPolymer\Console\Commands\Tenant\InitCommand;
-use ArtisanCloud\SaaSPolymer\Console\Commands\Tenant\MigrateCommand;
+use ArtisanCloud\SaaSMonomer\Console\Commands\Tenant\Init;
+use ArtisanCloud\SaaSMonomer\Console\Commands\Tenant\Migrate;
+use ArtisanCloud\SaaSMonomer\Services\TenantService\src\Jobs\SeedTenantDemo;
 use ArtisanCloud\SaaSPolymer\Services\ArtisanService\src\Providers\ArtisanServiceProvider;
 use ArtisanCloud\SaaSPolymer\Services\LandService\src\Providers\LandServiceProvider;
 use Laravel\Passport\Passport;
@@ -56,7 +57,7 @@ class PolymerServiceProvider extends ServiceProvider
 
             $this->publishConfig();
             $this->publishMigration();
-            $this->publishCommand();
+            
 
 
         }
@@ -79,11 +80,5 @@ class PolymerServiceProvider extends ServiceProvider
         }
     }
 
-    protected function publishCommand()
-    {
-        $this->commands([
-            InitCommand::class,
-            MigrateCommand::class,
-        ]);
-    }
+
 }   
