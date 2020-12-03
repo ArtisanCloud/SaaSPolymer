@@ -116,7 +116,11 @@ class ArtisanAPIController extends APIController
         // dispatch user registerd event
         if ($user) {
 //            dd($user);
-            $eventUserRegistered = new UserRegistered($user, $request->input('org_name'), $request->input('short_name'));
+            $eventUserRegistered = new UserRegistered(
+                $user,
+                $request->input('org_name'),
+                $request->input('short_name')
+            );
             event($eventUserRegistered);
         }
 

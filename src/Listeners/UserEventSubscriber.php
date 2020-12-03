@@ -27,10 +27,10 @@ class UserEventSubscriber
      */
     public function handleUserRegistered($event)
     {
-        Log::info($event->user->mobile . ": Subscriber user registered: ");
+        Log::info($event->user->mobile . ": subscriber handle user registered: ");
 
         // to create user org
-        OrgService::dispatchCreateOrgBy($event->user, $event->orgName, $event->shortName);
+        OrgService::dispatchCreateOrgBy($event->user, $event->orgName, $event->shortName, false);
 
     }
 
