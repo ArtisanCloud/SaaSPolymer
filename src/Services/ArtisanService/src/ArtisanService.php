@@ -60,7 +60,7 @@ class ArtisanService extends ArtisanCloudService
             ],
             $arrayData
         );
-        $this->m_model->password = encodePlainPassword($arrayData['password']);
+        $this->m_model->password = encodeHashedPassword($arrayData['password']);
 //        dd($this->m_model);
         return $this->m_model;
     }
