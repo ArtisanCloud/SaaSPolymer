@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/invitation', function () {
-    return view('artisan-cloud::invitation');
+Route::get('/view/artisan/invitation', function () {
+    return view('artisan-cloud::artisan.invitation');
+});
+
+Route::get('/view/artisan/registered', function () {
+    return view('artisan-cloud::artisan.registered');
 });

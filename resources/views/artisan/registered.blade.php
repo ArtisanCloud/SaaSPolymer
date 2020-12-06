@@ -239,15 +239,13 @@
                                                                 <tr>
                                                                     <td class="h3 center pb25"
                                                                         style="color:#000000; font-family:'Lato', Arial ,sans-serif; font-size:24px; line-height:32px; font-weight:bold; text-align:center; padding-bottom:25px;">
-                                                                        ProductMan内测邀码: {{@$code}}
+                                                                        Hi {{ @$user->name }}：
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="text-center pb25"
                                                                         style="color:#777777; font-family:'Lato', Arial,sans-serif; font-size:17px; line-height:30px; text-align:center; padding-bottom:25px;">
-
-                                                                        Hi， 我们的ProductMan已经开始内测啦，诚邀您加入我们。
-                                                                        我们的ProductMan可以帮你解决产品管理、发布一条龙服务。
+                                                                            <span style="color:green">恭喜您，您的注册账号已经可以正常使用</span>，
                                                                     </td>
                                                                 </tr>
                                                                 <!-- Button -->
@@ -259,12 +257,12 @@
                                                                             <tr>
                                                                                 <td class="text-button"
                                                                                     style="background:#ef3050; color:#ffffff; font-family:Arial ,sans-serif; font-size:14px; line-height:18px; padding:12px 20px; text-align:center; text-transform:uppercase; font-weight:bold; border-radius:22px;">
-                                                                                    <a href="{{ url("invitaton/active?code=".@$code."&email=".@$email) }}"
+                                                                                    <a href="{{ url("/") }}"
                                                                                        target="_blank"
                                                                                        class="link-white"
                                                                                        style="color:#ffffff; text-decoration:none;"><span
                                                                                                 class="link-white"
-                                                                                                style="color:#ffffff; text-decoration:none;">点击激活</span></a>
+                                                                                                style="color:#ffffff; text-decoration:none;">去登录</span></a>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
