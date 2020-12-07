@@ -5,6 +5,7 @@ namespace ArtisanCloud\SaaSPolymer\Listeners;
 use ArtisanCloud\SaaSMonomer\Services\OrgService\OrgService;
 use ArtisanCloud\SaaSPolymer\Events\UserRegistered;
 
+use ArtisanCloud\UBT\Facades\UBT;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -27,7 +28,7 @@ class UserEventSubscriber
      */
     public function handleUserRegistered($event)
     {
-        Log::info($event->user->mobile . ": subscriber handle user registered: ");
+        UBT::info("subscriber handle user registered", ['mobile' => $event->user->mobile]);
 
         // to create user org
         OrgService::dispatchCreateOrgBy($event->user, $event->orgName, $event->shortName, false);
