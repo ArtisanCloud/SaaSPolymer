@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use ArtisanCloud\UBT\Facades\UBT;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,10 @@ Route::get('/view/artisan/invitation', function () {
 
 Route::get('/view/artisan/registered', function () {
     return view('artisan-cloud::artisan.registered');
+});
+
+Route::get('/ubt/info', function () {
+
+    UBT::info('213', ['123' => '321']);
+
 });
