@@ -3,6 +3,7 @@
 namespace ArtisanCloud\SaaSPolymer\Events;
 
 use App\Models\User;
+use ArtisanCloud\UBT\Facades\UBT;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,7 +11,6 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class UserRegistered
 {
@@ -29,13 +29,18 @@ class UserRegistered
      *
      * @return void
      */
-    public function __construct(User $user, string $orgName,string $shortName)
+    public function __construct(User $user, string $orgName, string $shortName)
     {
         //
         $this->user = $user;
         $this->orgName = $orgName;
         $this->shortName = $shortName;
-        Log::info($user->mobile.": Event user registered:  org name:" . $orgName . " org short name:" . $shortName );
+        UBT::info("Event user registered", [
+            'mobile' => $user->mobile,
+            'orgNane' => $orgName,
+            'shortName' => $shortName,
+
+        ]);
     }
 
     /**
